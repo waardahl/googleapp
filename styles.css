@@ -10,6 +10,10 @@
     background-color: blue;
 }
 
+.testi {
+    touch-action: none;
+}
+
 i {
     border: solid black;
     border-width: 0 3px 3px 0;
