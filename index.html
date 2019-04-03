@@ -1,28 +1,118 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map Start Page</title>
+    <title>Simple Map</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-startup-image" href="launch.gif">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="manifest" href="/manifest.json">
+
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 85%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
   </head>
   <body>
-      <div class="container ">
-        <div class="row centerbutton">
-          <h1>Welcome to the Google map</h1>
-        <br></br>
+    <div class="container"  id="map"></div>
+    <div class="text-center container testi" style="padding: 1%">
+      <div class="row " id="buttons">
+        <div class="col" >
+          <button onclick="centerIt()">centerit</button>
         </div>
-        <div class="row centerbutton">
-            <button><a href="hello.html" class="btn btn-default" >Press here to start google mapsi</a></button>
+        <div class="col">
+            <div class="row centerbutton">
+              <button onclick="addLatitude()"><i class="arrow up"></i></button>
+            </div>
+            <div class="row centerbutton">
+              <button onclick="removeLongitude()"><i class="arrow left"></i></button>
+              <button onclick="removeLatitude()"><i class="arrow down"></i></button>
+              <button onclick="addLongitude()"><i class="arrow right"></i></button>
+            </div>
         </div>
-          
+        <div class="col">
+            <button onclick="setZoomPlus()">+</button>
+            <button onclick="setZoomMinus()">-</button>
+        </div>
       </div>
+    </div>
 
+
+    <script>
+        var map;
+        var sthlm = {lat: 59.329426, lng: 18.060096};
+
+        function rotate90() {
+          var heading = map.getHeading() || 0;
+          map.setHeading(heading + 90);
+        }
+
+        function autoRotate() {
+        // Determine if we're showing aerial imagery.
+        if (map.getTilt() !== 0) {
+            window.setInterval(rotate90, 3000);
+            }
+        }
+
+        function centerIt() {
+          map.setCenter(sthlm,18);
+          map.setZoom(18);
+        }
+
+        function setZoomPlus() {
+          map.setZoom(map.getZoom()+1);
+        }
+
+        function setZoomMinus() {
+          map.setZoom(map.getZoom()-1);
+        }
+
+
+        function addLongitude() {
+          map.setCenter({lat: map.getCenter().lat(), lng: map.getCenter().lng() + 0.001});
+        }
+
+        function removeLongitude() {
+          map.setCenter({lat: map.getCenter().lat(), lng: map.getCenter().lng() - 0.001});
+        }
+
+        function addLatitude() {
+          map.setCenter({lat: map.getCenter().lat() + 0.001, lng: map.getCenter().lng()});
+        }
+
+        function removeLatitude() {
+          map.setCenter({lat: map.getCenter().lat() - 0.001, lng: map.getCenter().lng()});
+        }
+
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+            center: sthlm,
+            zoom: 18,
+            mapTypeId: 'satellite',
+            tilt: 45,
+            disableDefaultUI: true,
+            draggable: false
+        });
+        }
+
+    </script>
+            
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+    async defer></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
