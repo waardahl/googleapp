@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MapMe 2.0</title>
+    <title>MapMe 3.0</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no ">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="https://waardahl.github.io/googleapp/apple-touch-icon.png"/>
-    <link rel="apple-touch-startup-image" href="https://waardahl.github.io/googleapp/hello.png"/>
+    <!-- iPhone X, Xs (1125px x 2436px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="https://waardahl.github.io/googleapp/hello.png"/>
+    <!-- iPhone X, Xs (750px x 1334px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="https://waardahl.github.io/googleapp/hello-iphone-6.png"/>
+    
+
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -57,6 +63,9 @@
 
 
     <script>
+
+        
+
         var map;
         var sthlm = {lat: 59.329426, lng: 18.060096};
 
