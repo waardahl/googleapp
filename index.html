@@ -3,7 +3,7 @@
   <head>
     <title>Simple Map</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no ">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="apple-touch-startup-image" href="launch.gif">
@@ -77,12 +77,13 @@
           navigator.geolocation.getCurrentPosition(function (position) {
           initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
           map.setCenter(initialLocation);
+          map.setZoom(17);
           });
         }
 
         // centers map on centralen 
         function centerCentralen() {
-          map.setCenter(sthlm,18);
+          map.setCenter(sthlm);
           map.setZoom(18);
         }
         
@@ -92,24 +93,29 @@
         }
 
         function setZoomMinus() {
-          map.setZoom(map.getZoom()-1);
+          // limit the zoom
+          if (map.getZoom() < 3) {
+            map.setZoom(2);
+          }else{
+            map.setZoom(map.getZoom()-1);
+            }
         }
 
         //functions for navigating with buttons
         function addLongitude() {
-          map.setCenter({lat: map.getCenter().lat(), lng: map.getCenter().lng() + 0.001});
+          map.setCenter({lat: map.getCenter().lat(), lng: map.getCenter().lng() + (1/(1.5**map.getZoom()))});
         }
 
         function removeLongitude() {
-          map.setCenter({lat: map.getCenter().lat(), lng: map.getCenter().lng() - 0.001});
+          map.setCenter({lat: map.getCenter().lat(), lng: map.getCenter().lng() - (1/(1.5**map.getZoom()))});
         }
 
         function addLatitude() {
-          map.setCenter({lat: map.getCenter().lat() + 0.001, lng: map.getCenter().lng()});
+          map.setCenter({lat: map.getCenter().lat() + (1/(1.5**map.getZoom())), lng: map.getCenter().lng()});
         }
 
         function removeLatitude() {
-          map.setCenter({lat: map.getCenter().lat() - 0.001, lng: map.getCenter().lng()});
+          map.setCenter({lat: map.getCenter().lat() - (1/(1.5**map.getZoom())), lng: map.getCenter().lng()});
         }
 
 
@@ -127,6 +133,7 @@
             if (navigator.geolocation) {
               centerGeo();
             }
+
 
 
             // listen for click on map
