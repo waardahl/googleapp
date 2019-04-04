@@ -105,8 +105,63 @@
             mapTypeId: 'satellite',
             tilt: 45,
             disableDefaultUI: true,
-            draggable: false
+            draggable: true,
         });
+
+            // listen for click on map
+            google.maps.event.addListener(map, 'click', function(event){
+              // add marker
+              addMarker({coords:event.latLng});
+            });
+            
+            // array of markers
+            var markers = [
+            {
+              coords:{lat: 59.334591, lng:18.073240},
+              iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+              content: '<h1>fav place yooo</h1>'
+            },
+            {
+              coords:{lat: 59.334591, lng:18.083240},
+              content: '<h1>second fav place</h1>'
+            },
+            {
+              coords:{lat: 59.334591, lng:18.093240},
+              content: '<h1>third fav place</h1>'
+            }
+            ];
+            
+            // loop through markers
+            for(var i = 0;i < markers.length;i++){
+              // add marker
+              addMarker(markers[i]);
+            }
+
+            //*** add marker function ***//
+            function addMarker(props){
+              var marker = new google.maps.Marker({
+                  position:props.coords,
+                  map:map,
+                });
+
+              // check for custom icon  
+              if(props.iconImage){
+                // set icon image
+                marker.setIcon(props.iconImage);
+              }
+
+              // check content
+              if(props.content){
+                var infoWindow = new google.maps.InfoWindow({
+                  content:props.content
+                });
+
+                marker.addListener('click', function(){
+                  infoWindow.open(map, marker);
+                });
+
+              }
+            }
         }
 
     </script>
