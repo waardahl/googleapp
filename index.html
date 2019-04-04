@@ -31,7 +31,12 @@
     <div class="text-center container testi" style="padding: 1%">
       <div class="row " id="buttons">
         <div class="col" >
-          <button onclick="centerIt()">centerit</button>
+          <div class="row centerbutton">
+              <button onclick="centerCentralen()">centralen</button>
+          </div>
+          <div class="row centerbutton">
+              <button onclick="centerGeo()">find me</button>
+          </div>
         </div>
         <div class="col">
             <div class="row centerbutton">
@@ -67,11 +72,21 @@
             }
         }
 
-        function centerIt() {
+        // centers map on your location 
+        function centerGeo() {
+          navigator.geolocation.getCurrentPosition(function (position) {
+          initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          map.setCenter(initialLocation);
+          });
+        }
+
+        // centers map on centralen 
+        function centerCentralen() {
           map.setCenter(sthlm,18);
           map.setZoom(18);
         }
-
+        
+        // buttons for zoom
         function setZoomPlus() {
           map.setZoom(map.getZoom()+1);
         }
@@ -110,10 +125,7 @@
 
             // centers map on current geo location
             if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(function (position) {
-              initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-              map.setCenter(initialLocation);
-              });
+              centerGeo();
             }
 
 
